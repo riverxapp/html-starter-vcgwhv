@@ -1,8 +1,0 @@
-.DS_Store
-html-assistant-instructions.md
-html-generator-prompt.md
-node_modules/
-dist/
-.vite/
-coverage/
-*.log
