@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>RiverX App</title>
+  <script>
+    window.__APP_CONFIG__ = window.__APP_CONFIG__ || {};
+    window.__APP_CONFIG__.appName = window.__APP_CONFIG__.appName || 'RiverX App';
+    window.__APP_CONFIG__.apiBaseUrl = window.__APP_CONFIG__.apiBaseUrl || '/api';
+    document.title = window.__APP_CONFIG__.appName;
+  </script>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+    }
+  </script>
+  <script>
+    (function() {
+      const stored = localStorage.getItem('theme');
+      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      const theme = stored || (prefersDark ? 'dark' : 'light');
+      document.documentElement.classList.add(theme);
+    })();
+  </script>
+</head>
+<body class="min-h-screen bg-gradient-to-br from-slate-100 via-white to-blue-50 text-slate-900 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950 dark:text-slate-100">
+  <!-- Navbar -->
+  <header class="sticky top-0 z-40 border-b border-white/20 bg-white/70 backdrop-blur-xl dark:border-slate-800/60 dark:bg-slate-950/70">
+    <nav>
+      <div class="mx-auto flex w-full max-w-[1600px] items-center justify-between px-4 py-4 sm:px-6">
+        <a href="#hero" class="flex items-center gap-3 transition hover:opacity-90">
+          <div class="flex h-11 w-11 items-center justify-center rounded-2xl bg-gradient-to-br from-indigo-600 via-blue-600 to-cyan-500 text-white shadow-xl">
+            <span class="text-sm font-bold">HS</span>
+          </div>
+          <span class="text-xl font-bold tracking-tight">HTML Starter</span>
+        </a>
+        <div class="hidden items-center gap-6 md:flex">
+          <a href="#features" class="text-sm font-medium transition hover:text-indigo-600">Features</a>
+          <a href="#how-it-works" class="text-sm font-medium transition hover:text-indigo-600">How it Works</a>
+          <a href="#testimonials" class="text-sm font-medium transition hover:text-indigo-600">Testimonials</a>
+          <a href="#faq" class="text-sm font-medium transition hover:text-indigo-600">FAQ</a>
+        </div>
+        <div class="hidden md:flex md:items-center md:gap-3">
+          <button type="button" id="theme-toggle" class="rounded-xl p-2 transition hover:bg-slate-200/50 dark:hover:bg-slate-800/60" aria-label="Toggle theme">
+            <svg id="icon-sun" class="h-5 w-5 hidden dark:block" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/></svg>
+            <svg id="icon-moon" class="h-5 w-5 block dark:hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/></svg>
+          </button>
+          <a href="#final-cta" class="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-indigo-600 via-blue-600 to-cyan-500 px-6 py-2.5 text-sm font-semibold text-white shadow-xl transition-all duration-300 hover:scale-[1.05]">Get Started</a>
+        </div>
+        <div class="flex items-center gap-1 md:hidden">
+          <button type="button" id="theme-toggle-mobile" class="rounded-xl p-2 transition hover:bg-slate-200/50 dark:hover:bg-slate-800/60" aria-label="Toggle theme">
+            <svg id="icon-sun-mobile" class="h-5 w-5 hidden dark:block" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/></svg>
+            <svg id="icon-moon-mobile" class="h-5 w-5 block dark:hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/></svg>
+          </button>
+          <button type="button" id="mobile-menu-btn" class="rounded-xl p-2 transition hover:bg-slate-200/50 dark:hover:bg-slate-800/60 md:hidden" aria-label="Toggle menu">
+            <svg id="icon-menu" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M4 6h16M4 12h16M4 18h16"/></svg>
+            <svg id="icon-close" class="h-6 w-6 hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M6 18L18 6M6 6l12 12"/></svg>
+          </button>
+        </div>
+      </div>
+      <div id="mobile-menu" class="hidden border-t border-white/20 bg-white/90 backdrop-blur-xl dark:border-slate-800/60 dark:bg-slate-950/90 md:hidden">
+        <div class="mx-auto flex max-w-[1600px] flex-col gap-2 px-4 py-3 sm:px-6">
+          <a href="#features" class="mobile-link rounded-lg px-2 py-2 text-sm font-medium text-slate-700 hover:bg-slate-50 dark:text-slate-200 dark:hover:bg-slate-800">Features</a>
+          <a href="#how-it-works" class="mobile-link rounded-lg px-2 py-2 text-sm font-medium text-slate-700 hover:bg-slate-50 dark:text-slate-200 dark:hover:bg-slate-800">How it Works</a>
+          <a href="#testimonials" class="mobile-link rounded-lg px-2 py-2 text-sm font-medium text-slate-700 hover:bg-slate-50 dark:text-slate-200 dark:hover:bg-slate-800">Testimonials</a>
+          <a href="#faq" class="mobile-link rounded-lg px-2 py-2 text-sm font-medium text-slate-700 hover:bg-slate-50 dark:text-slate-200 dark:hover:bg-slate-800">FAQ</a>
+          <a href="#final-cta" class="mobile-link mt-1 inline-flex justify-center rounded-full bg-gradient-to-r from-indigo-600 via-blue-600 to-cyan-500 px-4 py-2 text-sm font-semibold text-white">Get Started</a>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+    <div class="mx-auto w-full max-w-[1600px] px-4 sm:px-6">
+      <!-- Hero -->
+      <section id="hero" class="py-16 sm:py-28">
+        <div class="grid items-center gap-16 lg:grid-cols-2">
+          <div>
+            <span class="inline-flex items-center gap-2 rounded-full border border-indigo-200 bg-indigo-50 px-4 py-1.5 text-[11px] sm:text-sm font-semibold uppercase tracking-wider text-indigo-700 dark:bg-indigo-900/30 dark:text-indigo-300">Bring structure to your workflows</span>
+            <h1 class="mt-6 text-4xl font-extrabold leading-[1.05] tracking-tight sm:text-5xl lg:text-6xl bg-gradient-to-r from-slate-900 via-indigo-700 to-blue-600 bg-clip-text text-transparent dark:from-white dark:via-indigo-400 dark:to-blue-400">Run your entire workflow from one clean dashboard.</h1>
+            <p class="mt-6 max-w-xl text-lg text-slate-600 dark:text-slate-300">HTML Starter helps modern teams automate routine tasks, track projects in real time, and ship work faster without chaos.</p>
+            <div class="mt-8 flex flex-wrap items-center gap-4">
+              <a href="#final-cta" class="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-indigo-600 via-blue-600 to-cyan-500 px-6 py-3 text-sm font-semibold text-white shadow-xl transition-all duration-300 hover:scale-[1.05]">Get Started in Minutes</a>
+              <a href="#how-it-works" class="inline-flex items-center gap-2 rounded-full border border-slate-300 px-6 py-3 text-sm font-semibold transition hover:bg-white/60 dark:border-slate-700 dark:hover:bg-slate-800/40">View how it works <svg class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor"><path d="M12.293 5.293a1 1 0 011.414 0L17 8.586a2 2 0 010 2.828l-3.293 3.293a1 1 0 01-1.414-1.414L13.586 11H5a1 1 0 110-2h8.586l-1.293-1.293a1 1 0 010-1.414z"/></svg></a>
+            </div>
+            <div class="mt-6 flex flex-wrap items-center gap-x-4 gap-y-1 text-xs text-slate-500 dark:text-slate-400">
+              <span>No credit card required</span>
+              <span class="hidden h-1 w-1 rounded-full bg-slate-300 sm:inline-block"></span>
+              <span>Set up in under 5 minutes</span>
+            </div>
+          </div>
+          <div class="relative">
+            <div id="hero-slider" class="relative overflow-hidden rounded-3xl border border-white/30 bg-white/70 shadow-2xl backdrop-blur-xl dark:border-slate-700/50 dark:bg-slate-900/60">
+              <div class="relative h-80 sm:h-96 lg:h-[28rem]">
+                <div class="hero-slide absolute inset-0 opacity-100 transition-opacity duration-700" data-index="0">
+                  <img src="https://images.unsplash.com/photo-1542744173-8e7e53415bb0?auto=format&fit=crop&w=1200&q=80" alt="Plan sprints" class="h-full w-full object-cover">
+                  <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent"></div>
+                  <div class="absolute bottom-6 left-6 text-white">
+                    <span class="rounded-full bg-white/20 px-3 py-1 text-xs font-medium uppercase">Sprint planning</span>
+                    <h3 class="mt-2 text-lg font-semibold">Plan sprints with total clarity</h3>
+                    <p class="text-sm text-white/80">See every task, owner, and deadline in one organized view.</p>
+                  </div>
+                </div>
+                <div class="hero-slide absolute inset-0 opacity-0 transition-opacity duration-700" data-index="1">
+                  <img src="https://images.unsplash.com/photo-1553877522-43269d4ea984?auto=format&fit=crop&w=1200&q=80" alt="Automate handoffs" class="h-full w-full object-cover">
+                  <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent"></div>
+                  <div class="absolute bottom-6 left-6 text-white">
+                    <span class="rounded-full bg-white/20 px-3 py-1 text-xs font-medium uppercase">Automation rules</span>
+                    <h3 class="mt-2 text-lg font-semibold">Automate repetitive handoffs</h3>
+                    <p class="text-sm text-white/80">Turn status updates and assignments into simple rules.</p>
+                  </div>
+                </div>
+                <div class="hero-slide absolute inset-0 opacity-0 transition-opacity duration-700" data-index="2">
+                  <img src="https://images.unsplash.com/photo-1551434678-e076c223a692?auto=format&fit=crop&w=1200&q=80" alt="Monitor progress" class="h-full w-full object-cover">
+                  <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent"></div>
+                  <div class="absolute bottom-6 left-6 text-white">
+                    <span class="rounded-full bg-white/20 px-3 py-1 text-xs font-medium uppercase">Live reporting</span>
+                    <h3 class="mt-2 text-lg font-semibold">Monitor progress in real time</h3>
+                    <p class="text-sm text-white/80">Track throughput, blockers, and ownership from one dashboard.</p>
+                  </div>
+                </div>
+              </div>
+              <div class="absolute bottom-4 right-4 flex gap-1.5">
+                <button type="button" class="hero-dot h-1.5 w-5 rounded-full bg-blue-400 transition-all" data-index="0" aria-label="Slide 1"></button>
+                <button type="button" class="hero-dot h-1.5 w-2 rounded-full bg-white/60 transition-all hover:bg-white/80" data-index="1" aria-label="Slide 2"></button>
+                <button type="button" class="hero-dot h-1.5 w-2 rounded-full bg-white/60 transition-all hover:bg-white/80" data-index="2" aria-label="Slide 3"></button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Trusted by -->
+      <section id="trusted-by" class="border-y border-white/20 py-16 dark:border-slate-800/60">
+        <div class="mx-auto max-w-5xl text-center">
+          <p class="text-xs font-semibold uppercase tracking-[0.2em] text-slate-400 dark:text-slate-500">Trusted by fast-moving teams</p>
+          <div class="mt-8 flex flex-wrap items-center justify-center gap-x-12 gap-y-4 text-sm font-medium text-slate-500 sm:gap-x-16 dark:text-slate-400">
+            <span class="tracking-tight">NovaCloud</span>
+            <span class="tracking-tight">PixelDesk</span>
+            <span class="tracking-tight">Northwave</span>
+            <span class="tracking-tight">LinearLabs</span>
+            <span class="tracking-tight">Brightline</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- Features -->
+      <section id="features" class="py-10 sm:py-24">
+        <div class="mx-auto max-w-3xl text-center">
+          <h2 class="text-3xl font-bold tracking-tight text-slate-900 dark:text-slate-50 sm:text-4xl">Everything you need to move work forward.</h2>
+          <p class="mt-4 text-base leading-relaxed text-slate-600 dark:text-slate-400">Organize projects, automate handoffs, and keep your team aligned from one clean, minimal workspace.</p>
+        </div>
+        <div class="mt-12 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+          <article class="group flex flex-col gap-4 rounded-2xl border border-white/30 bg-white/70 p-6 shadow-lg backdrop-blur-sm transition-all duration-300 hover:-translate-y-1 hover:border-indigo-200/60 hover:shadow-xl dark:border-slate-700/50 dark:bg-slate-900/60 dark:hover:border-indigo-800/50">
+            <div class="inline-flex h-12 w-12 items-center justify-center rounded-xl bg-indigo-50 text-indigo-600 transition-colors group-hover:bg-indigo-100 dark:bg-indigo-900/50 dark:text-indigo-400 dark:group-hover:bg-indigo-900/70">
+              <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M8 7V3m8 4V3M5 11h14M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5A2 2 0 003 7v12a2 2 0 002 2z"/></svg>
+            </div>
+            <h3 class="text-base font-semibold text-slate-900 dark:text-slate-50">Unified task views</h3>
+            <p class="text-sm leading-relaxed text-slate-600 dark:text-slate-400">See every task, deadline, and owner in one place with flexible list, board, and timeline views.</p>
+          </article>
+          <article class="group flex flex-col gap-4 rounded-2xl border border-white/30 bg-white/70 p-6 shadow-lg backdrop-blur-sm transition-all duration-300 hover:-translate-y-1 hover:border-indigo-200/60 hover:shadow-xl dark:border-slate-700/50 dark:bg-slate-900/60 dark:hover:border-indigo-800/50">
+            <div class="inline-flex h-12 w-12 items-center justify-center rounded-xl bg-indigo-50 text-indigo-600 transition-colors group-hover:bg-indigo-100 dark:bg-indigo-900/50 dark:text-indigo-400 dark:group-hover:bg-indigo-900/70">
+              <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M13 2L3 14h7l-1 8 10-12h-7l1-8z"/></svg>
+            </div>
+            <h3 class="text-base font-semibold text-slate-900 dark:text-slate-50">Automation rules</h3>
+            <p class="text-sm leading-relaxed text-slate-600 dark:text-slate-400">Create no-code automations to assign owners, move stages, and notify stakeholders automatically.</p>
+          </article>
+          <article class="group flex flex-col gap-4 rounded-2xl border border-white/30 bg-white/70 p-6 shadow-lg backdrop-blur-sm transition-all duration-300 hover:-translate-y-1 hover:border-indigo-200/60 hover:shadow-xl dark:border-slate-700/50 dark:bg-slate-900/60 dark:hover:border-indigo-800/50">
+            <div class="inline-flex h-12 w-12 items-center justify-center rounded-xl bg-indigo-50 text-indigo-600 transition-colors group-hover:bg-indigo-100 dark:bg-indigo-900/50 dark:text-indigo-400 dark:group-hover:bg-indigo-900/70">
+              <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M8 10h8m-8 4h5M4 6h16a1 1 0 011 1v9a1 1 0 01-1 1h-4.586a1 1 0 00-.707.293L11 21l-3.707-3.707A1 1 0 006.586 17H4a1 1 0 01-1-1V7a1 1 0 011-1z"/></svg>
+            </div>
+            <h3 class="text-base font-semibold text-slate-900 dark:text-slate-50">Context-rich collaboration</h3>
+            <p class="text-sm leading-relaxed text-slate-600 dark:text-slate-400">Centralize comments, files, and decisions so nothing gets lost in long email threads.</p>
+          </article>
+          <article class="group flex flex-col gap-4 rounded-2xl border border-white/30 bg-white/70 p-6 shadow-lg backdrop-blur-sm transition-all duration-300 hover:-translate-y-1 hover:border-indigo-200/60 hover:shadow-xl dark:border-slate-700/50 dark:bg-slate-900/60 dark:hover:border-indigo-800/50">
+            <div class="inline-flex h-12 w-12 items-center justify-center rounded-xl bg-indigo-50 text-indigo-600 transition-colors group-hover:bg-indigo-100 dark:bg-indigo-900/50 dark:text-indigo-400 dark:group-hover:bg-indigo-900/70">
+              <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M4 19h16M7 10l3 3 4-6 5 7"/></svg>
+            </div>
+            <h3 class="text-base font-semibold text-slate-900 dark:text-slate-50">Real-time reporting</h3>
+            <p class="text-sm leading-relaxed text-slate-600 dark:text-slate-400">Track throughput, cycle time, and workload in real time to unblock teams quickly.</p>
+          </article>
+          <article class="group flex flex-col gap-4 rounded-2xl border border-white/30 bg-white/70 p-6 shadow-lg backdrop-blur-sm transition-all duration-300 hover:-translate-y-1 hover:border-indigo-200/60 hover:shadow-xl dark:border-slate-700/50 dark:bg-slate-900/60 dark:hover:border-indigo-800/50">
+            <div class="inline-flex h-12 w-12 items-center justify-center rounded-xl bg-indigo-50 text-indigo-600 transition-colors group-hover:bg-indigo-100 dark:bg-indigo-900/50 dark:text-indigo-400 dark:group-hover:bg-indigo-900/70">
+              <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M12 3l7 4v5c0 4.418-3.134 8.418-7 9-3.866-.582-7-4.582-7-9V7l7-4z"/></svg>
+            </div>
+            <h3 class="text-base font-semibold text-slate-900 dark:text-slate-50">Enterprise-grade reliability</h3>
+            <p class="text-sm leading-relaxed text-slate-600 dark:text-slate-400">Built on secure, scalable infrastructure with audit-friendly activity trails.</p>
+          </article>
+          <article class="group flex flex-col gap-4 rounded-2xl border border-white/30 bg-white/70 p-6 shadow-lg backdrop-blur-sm transition-all duration-300 hover:-translate-y-1 hover:border-indigo-200/60 hover:shadow-xl dark:border-slate-700/50 dark:bg-slate-900/60 dark:hover:border-indigo-800/50">
+            <div class="inline-flex h-12 w-12 items-center justify-center rounded-xl bg-indigo-50 text-indigo-600 transition-colors group-hover:bg-indigo-100 dark:bg-indigo-900/50 dark:text-indigo-400 dark:group-hover:bg-indigo-900/70">
+              <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M8 7h8M7 17h4m2 0h4M7 7l-3 3m13-3l3 3M7 17l-3-3m13 3l3-3"/></svg>
+            </div>
+            <h3 class="text-base font-semibold text-slate-900 dark:text-slate-50">Seamless integrations</h3>
+            <p class="text-sm leading-relaxed text-slate-600 dark:text-slate-400">Connect your tools so updates flow automatically between chat, email, and calendar.</p>
+          </article>
+        </div>
+      </section>
+
+      <!-- How it works -->
+      <section id="how-it-works" class="border-t border-white/20 py-10 sm:py-24 dark:border-slate-800/60">
+        <div class="mx-auto max-w-3xl text-center">
+          <h2 class="text-3xl font-bold tracking-tight text-slate-900 dark:text-slate-50 sm:text-4xl">How HTML Starter fits your day.</h2>
+          <p class="mt-3 text-sm text-slate-600 sm:text-base">From idea to shipped work in three simple steps.</p>
+        </div>
+        <div class="mt-10 grid gap-8 md:grid-cols-3">
+          <div class="flex flex-col items-start gap-4 rounded-2xl border border-white/30 bg-white/70 p-6 shadow-lg backdrop-blur-sm transition hover:border-indigo-200/60 hover:shadow-xl dark:border-slate-700/50 dark:bg-slate-900/60 dark:hover:border-indigo-800/50">
+            <div class="flex h-9 w-9 items-center justify-center rounded-full bg-indigo-50 text-xs font-semibold text-indigo-700 dark:bg-indigo-900/50 dark:text-indigo-400">1</div>
+            <h3 class="text-sm font-semibold text-slate-900 dark:text-slate-50">Capture and organize work</h3>
+            <p class="text-sm leading-relaxed text-slate-600 dark:text-slate-400">Bring tasks in from email, chat, or spreadsheets and group them into clean projects, sprints, or lanes.</p>
+          </div>
+          <div class="flex flex-col items-start gap-4 rounded-2xl border border-white/30 bg-white/70 p-6 shadow-lg backdrop-blur-sm transition hover:border-indigo-200/60 hover:shadow-xl dark:border-slate-700/50 dark:bg-slate-900/60 dark:hover:border-indigo-800/50">
+            <div class="flex h-9 w-9 items-center justify-center rounded-full bg-indigo-50 text-xs font-semibold text-indigo-700 dark:bg-indigo-900/50 dark:text-indigo-400">2</div>
+            <h3 class="text-sm font-semibold text-slate-900 dark:text-slate-50">Automate handoffs</h3>
+            <p class="text-sm leading-relaxed text-slate-600 dark:text-slate-400">Define smart rules so work automatically moves to the right person with the right context at the right time.</p>
+          </div>
+          <div class="flex flex-col items-start gap-4 rounded-2xl border border-white/30 bg-white/70 p-6 shadow-lg backdrop-blur-sm transition hover:border-indigo-200/60 hover:shadow-xl dark:border-slate-700/50 dark:bg-slate-900/60 dark:hover:border-indigo-800/50">
+            <div class="flex h-9 w-9 items-center justify-center rounded-full bg-indigo-50 text-xs font-semibold text-indigo-700 dark:bg-indigo-900/50 dark:text-indigo-400">3</div>
+            <h3 class="text-sm font-semibold text-slate-900 dark:text-slate-50">Track, learn, and continuously improve</h3>
+            <p class="text-sm leading-relaxed text-slate-600 dark:text-slate-400">Dashboards show bottlenecks, trends, and ownership so you can keep improving your workflows.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Product preview -->
+      <section id="product-preview" class="py-8 sm:py-24">
+        <div class="grid items-center gap-12 lg:grid-cols-2">
+          <div>
+            <h2 class="text-3xl font-bold tracking-tight text-slate-900 dark:text-slate-50 sm:text-4xl">A single source of truth for every workflow.</h2>
+            <p class="mt-3 text-sm text-slate-600 dark:text-slate-400 sm:text-base">Replace scattered spreadsheets, endless status meetings, and buried email threads with one organized view of work. HTML Starter pulls everything together so your team always knows what matters now.</p>
+            <ul class="mt-5 space-y-3 text-sm text-slate-700 dark:text-slate-300">
+              <li class="flex items-start gap-2"><span class="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-indigo-50 text-indigo-600 dark:bg-indigo-900/50 dark:text-indigo-400"><svg class="h-3 w-3" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M2 6l3 3 5-6"/></svg></span><span>Customizable dashboards by team, project, or client.</span></li>
+              <li class="flex items-start gap-2"><span class="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-indigo-50 text-indigo-600 dark:bg-indigo-900/50 dark:text-indigo-400"><svg class="h-3 w-3" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M2 6l3 3 5-6"/></svg></span><span>Instant filters for owners, status, and deadlines.</span></li>
+              <li class="flex items-start gap-2"><span class="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-indigo-50 text-indigo-600 dark:bg-indigo-900/50 dark:text-indigo-400"><svg class="h-3 w-3" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M2 6l3 3 5-6"/></svg></span><span>Lightweight enough for fast teams, structured enough for scale.</span></li>
+            </ul>
+          </div>
+          <div class="relative">
+            <div class="overflow-hidden rounded-3xl border border-white/30 bg-white/70 shadow-2xl backdrop-blur-xl dark:border-slate-700/50 dark:bg-slate-900/60">
+              <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=1200&q=80" alt="Dashboard mockup" class="h-full w-full object-cover">
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Benefits -->
+      <section id="benefits" class="border-y border-white/20 py-8 sm:py-24 dark:border-slate-800/60">
+        <div class="grid gap-12 md:grid-cols-2">
+          <div>
+            <h2 class="text-3xl font-bold tracking-tight text-slate-900 dark:text-slate-50 sm:text-4xl">Ship more, with less manual work.</h2>
+            <p class="mt-3 text-sm text-slate-600 sm:text-base">HTML Starter gives your team leverage with automated workflows, fewer status pings, and clear ownership, so you can get more done in less time.</p>
+          </div>
+          <div>
+            <ul class="space-y-3 text-sm text-slate-700 dark:text-slate-300">
+              <li class="flex cursor-default items-start gap-2"><span class="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-emerald-50 text-emerald-600 dark:bg-emerald-900/40 dark:text-emerald-400"><svg class="h-3 w-3" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M2 6l3 3 5-6"/></svg></span><span><strong>Productivity</strong> – Reduce time spent on coordination and keep teams in flow for longer blocks.</span></li>
+              <li class="flex cursor-default items-start gap-2"><span class="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-emerald-50 text-emerald-600 dark:bg-emerald-900/40 dark:text-emerald-400"><svg class="h-3 w-3" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M2 6l3 3 5-6"/></svg></span><span><strong>Automation</strong> – Turn repetitive handoffs into rules so work moves forward while your team focuses on deep work.</span></li>
+              <li class="flex cursor-default items-start gap-2"><span class="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-emerald-50 text-emerald-600 dark:bg-emerald-900/40 dark:text-emerald-400"><svg class="h-3 w-3" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M2 6l3 3 5-6"/></svg></span><span><strong>Growth</strong> – Scale your processes without adding unnecessary headcount or complexity.</span></li>
+              <li class="flex cursor-default items-start gap-2"><span class="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-emerald-50 text-emerald-600 dark:bg-emerald-900/40 dark:text-emerald-400"><svg class="h-3 w-3" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M2 6l3 3 5-6"/></svg></span><span><strong>Clarity</strong> – Everyone sees priorities, owners, and timelines at a glance.</span></li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- Testimonials -->
+      <section id="testimonials" class="py-8 sm:py-24">
+        <div class="mx-auto max-w-3xl text-center">
+          <h2 class="text-3xl font-bold tracking-tight text-slate-900 dark:text-slate-50 sm:text-4xl">Teams that switch to HTML Starter move 30% faster.</h2>
+          <p class="mt-3 text-sm text-slate-600 sm:text-base">Real stories from teams that replaced scattered tools with one calm workspace.</p>
+        </div>
+        <div class="mt-10 grid gap-6 md:grid-cols-3">
+          <article class="flex h-full flex-col gap-4 rounded-2xl border border-white/30 bg-white/70 p-6 shadow-lg backdrop-blur-sm transition hover:border-indigo-200/60 hover:shadow-xl dark:border-slate-700/50 dark:bg-slate-900/60 dark:hover:border-indigo-800/50">
+            <div class="flex items-center gap-3">
+              <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=120&q=80" alt="Ananya B." class="h-10 w-10 rounded-full object-cover">
+              <div class="text-left"><div class="text-sm font-semibold text-slate-900 dark:text-slate-50">Ananya B.</div><div class="text-xs text-slate-500 dark:text-slate-400">Head of Operations, NovaCloud</div></div>
+            </div>
+            <p class="text-sm leading-relaxed text-slate-600 dark:text-slate-400">"HTML Starter transformed how our team understands work in progress. We can now see the status of every project in minutes instead of hours."</p>
+          </article>
+          <article class="flex h-full flex-col gap-4 rounded-2xl border border-white/30 bg-white/70 p-6 shadow-lg backdrop-blur-sm transition hover:border-indigo-200/60 hover:shadow-xl dark:border-slate-700/50 dark:bg-slate-900/60 dark:hover:border-indigo-800/50">
+            <div class="flex items-center gap-3">
+              <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&w=120&q=80" alt="Rahul Kumar" class="h-10 w-10 rounded-full object-cover">
+              <div class="text-left"><div class="text-sm font-semibold text-slate-900 dark:text-slate-50">Rahul Kumar</div><div class="text-xs text-slate-500 dark:text-slate-400">Product Lead, PixelDesk</div></div>
+            </div>
+            <p class="text-sm leading-relaxed text-slate-600 dark:text-slate-400">"We consolidated three tools into HTML Starter. Our handoffs are cleaner, and our shipping velocity has gone up significantly."</p>
+          </article>
+          <article class="flex h-full flex-col gap-4 rounded-2xl border border-white/30 bg-white/70 p-6 shadow-lg backdrop-blur-sm transition hover:border-indigo-200/60 hover:shadow-xl dark:border-slate-700/50 dark:bg-slate-900/60 dark:hover:border-indigo-800/50">
+            <div class="flex items-center gap-3">
+              <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=crop&w=120&q=80" alt="Lisa S." class="h-10 w-10 rounded-full object-cover">
+              <div class="text-left"><div class="text-sm font-semibold text-slate-900 dark:text-slate-50">Lisa S.</div><div class="text-xs text-slate-500 dark:text-slate-400">Founder, Brightline Studio</div></div>
+            </div>
+            <p class="text-sm leading-relaxed text-slate-600 dark:text-slate-400">"HTML Starter gave our small team enterprise-level workflows without the complexity. It feels calm and focused to work in every day."</p>
+          </article>
+        </div>
+      </section>
+
+      <!-- FAQ -->
+      <section id="faq" class="border-y border-white/20 py-8 sm:py-20 dark:border-slate-800/60">
+        <div class="mx-auto max-w-3xl text-center">
+          <h2 class="text-3xl font-bold tracking-tight text-slate-900 dark:text-slate-50 sm:text-4xl">Frequently asked questions</h2>
+          <p class="mt-3 text-sm text-slate-600 sm:text-base">Quick answers to common questions, without a sales call.</p>
+        </div>
+        <div class="mx-auto mt-10 max-w-3xl space-y-3">
+          <div class="faq-item overflow-hidden rounded-2xl border border-white/30 bg-white/70 dark:border-slate-700/50 dark:bg-slate-900/60">
+            <button type="button" class="faq-btn flex w-full items-center justify-between px-4 py-3 text-left text-sm font-medium text-slate-900 dark:text-slate-50 sm:px-5 sm:py-4">What kind of teams use HTML Starter?<span class="faq-icon ml-4 text-slate-400 transition-transform"><svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M19 9l-7 7-7-7"/></svg></span></button>
+            <div class="faq-content hidden border-t border-slate-100 px-4 pb-4 pt-2 text-sm text-slate-600 dark:border-slate-700 dark:text-slate-400 sm:px-5">HTML Starter works best for product, operations, marketing, customer success, and project teams that want clearer workflows and fewer status meetings.</div>
+          </div>
+          <div class="faq-item overflow-hidden rounded-2xl border border-white/30 bg-white/70 dark:border-slate-700/50 dark:bg-slate-900/60">
+            <button type="button" class="faq-btn flex w-full items-center justify-between px-4 py-3 text-left text-sm font-medium text-slate-900 dark:text-slate-50 sm:px-5 sm:py-4">Do we need a dedicated admin to maintain it?<span class="faq-icon ml-4 text-slate-400 transition-transform"><svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M19 9l-7 7-7-7"/></svg></span></button>
+            <div class="faq-content hidden border-t border-slate-100 px-4 pb-4 pt-2 text-sm text-slate-600 dark:border-slate-700 dark:text-slate-400 sm:px-5">No. HTML Starter is designed so team leads can set up workflows quickly without needing a full-time admin or consultant.</div>
+          </div>
+          <div class="faq-item overflow-hidden rounded-2xl border border-white/30 bg-white/70 dark:border-slate-700/50 dark:bg-slate-900/60">
+            <button type="button" class="faq-btn flex w-full items-center justify-between px-4 py-3 text-left text-sm font-medium text-slate-900 dark:text-slate-50 sm:px-5 sm:py-4">How long does implementation usually take?<span class="faq-icon ml-4 text-slate-400 transition-transform"><svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M19 9l-7 7-7-7"/></svg></span></button>
+            <div class="faq-content hidden border-t border-slate-100 px-4 pb-4 pt-2 text-sm text-slate-600 dark:border-slate-700 dark:text-slate-400 sm:px-5">Most teams get their first workflows live within a day, and fully migrate over within one to two weeks.</div>
+          </div>
+          <div class="faq-item overflow-hidden rounded-2xl border border-white/30 bg-white/70 dark:border-slate-700/50 dark:bg-slate-900/60">
+            <button type="button" class="faq-btn flex w-full items-center justify-between px-4 py-3 text-left text-sm font-medium text-slate-900 dark:text-slate-50 sm:px-5 sm:py-4">Can HTML Starter integrate with our existing tools?<span class="faq-icon ml-4 text-slate-400 transition-transform"><svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M19 9l-7 7-7-7"/></svg></span></button>
+            <div class="faq-content hidden border-t border-slate-100 px-4 pb-4 pt-2 text-sm text-slate-600 dark:border-slate-700 dark:text-slate-400 sm:px-5">Yes. HTML Starter connects with chat, calendar, and document tools so you can keep your existing stack while centralizing work.</div>
+          </div>
+          <div class="faq-item overflow-hidden rounded-2xl border border-white/30 bg-white/70 dark:border-slate-700/50 dark:bg-slate-900/60">
+            <button type="button" class="faq-btn flex w-full items-center justify-between px-4 py-3 text-left text-sm font-medium text-slate-900 dark:text-slate-50 sm:px-5 sm:py-4">Is my data secure?<span class="faq-icon ml-4 text-slate-400 transition-transform"><svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M19 9l-7 7-7-7"/></svg></span></button>
+            <div class="faq-content hidden border-t border-slate-100 px-4 pb-4 pt-2 text-sm text-slate-600 dark:border-slate-700 dark:text-slate-400 sm:px-5">Your data is encrypted in transit and at rest. Role-based access controls ensure the right people see the right information.</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Final CTA -->
+      <section id="final-cta" class="py-8 sm:py-24">
+        <div class="relative overflow-hidden rounded-3xl bg-gradient-to-r from-indigo-600 via-blue-600 to-cyan-500 px-8 py-14 text-center text-white shadow-2xl sm:px-12">
+          <div class="absolute -left-12 -top-12 h-32 w-32 rounded-full bg-white/10"></div>
+          <div class="absolute -bottom-16 -right-16 h-40 w-40 rounded-full bg-white/10"></div>
+          <div class="relative mx-auto max-w-2xl">
+            <h2 class="text-3xl font-bold tracking-tight sm:text-4xl">Ready to streamline your workflows?</h2>
+            <p class="mt-4 text-base text-blue-100/90 sm:text-lg">Bring your projects, people, and processes into one calm, focused workspace with HTML Starter.</p>
+            <div class="mt-6 flex justify-center">
+              <a href="#hero" class="inline-flex items-center gap-2 rounded-full bg-white px-8 py-3.5 text-base font-semibold text-blue-700 shadow-lg transition hover:scale-105 hover:shadow-xl">Get Started with HTML Starter</a>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="border-t border-white/20 bg-gradient-to-t from-slate-100 to-white dark:from-slate-950 dark:to-slate-900 dark:border-slate-800/60">
+    <div class="mx-auto flex max-w-[1600px] flex-col gap-6 px-4 py-8 sm:flex-row sm:items-center sm:justify-between sm:px-6">
+      <div class="flex flex-col gap-2">
+        <div class="flex items-center gap-2"><span class="text-base font-semibold text-slate-900 dark:text-slate-50">HTML Starter</span><span class="text-xs text-slate-400 dark:text-slate-500">Productivity Platform</span></div>
+        <p class="max-w-md text-xs text-slate-500 dark:text-slate-400">HTML Starter helps modern teams build calm, automated workflows that everyone actually enjoys using.</p>
+        <p class="text-xs text-slate-400 dark:text-slate-500">© <span id="year"></span> HTML Starter Inc. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script>
+(function () {
+  'use strict';
+  function initTheme() {
+    const toggle = () => {
+      const root = document.documentElement;
+      const isDark = root.classList.contains('dark');
+      root.classList.remove('light', 'dark');
+      root.classList.add(isDark ? 'light' : 'dark');
+      localStorage.setItem('theme', isDark ? 'light' : 'dark');
+    };
+    document.getElementById('theme-toggle')?.addEventListener('click', toggle);
+    document.getElementById('theme-toggle-mobile')?.addEventListener('click', toggle);
+  }
+  function initMobileMenu() {
+    const btn = document.getElementById('mobile-menu-btn');
+    const menu = document.getElementById('mobile-menu');
+    const iconMenu = document.getElementById('icon-menu');
+    const iconClose = document.getElementById('icon-close');
+    if (!btn || !menu) return;
+    btn.addEventListener('click', () => {
+      const isOpen = !menu.classList.contains('hidden');
+      menu.classList.toggle('hidden', isOpen);
+      if (iconMenu) iconMenu.classList.toggle('hidden', !isOpen);
+      if (iconClose) iconClose.classList.toggle('hidden', isOpen);
+    });
+    menu.querySelectorAll('.mobile-link').forEach((link) => {
+      link.addEventListener('click', () => {
+        menu.classList.add('hidden');
+        if (iconMenu) iconMenu.classList.remove('hidden');
+        if (iconClose) iconClose.classList.add('hidden');
+      });
+    });
+  }
+  function initHeroSlider() {
+    const slides = document.querySelectorAll('.hero-slide');
+    const dots = document.querySelectorAll('.hero-dot');
+    if (!slides.length) return;
+    let activeIndex = 0;
+    const total = slides.length;
+    function goTo(index) {
+      activeIndex = (index + total) % total;
+      slides.forEach((s, i) => {
+        s.classList.toggle('opacity-100', i === activeIndex);
+        s.classList.toggle('opacity-0', i !== activeIndex);
+      });
+      dots.forEach((d, i) => {
+        const isActive = i === activeIndex;
+        d.classList.toggle('w-5', isActive);
+        d.classList.toggle('w-2', !isActive);
+        d.classList.toggle('bg-blue-400', isActive);
+        d.classList.toggle('bg-white/60', !isActive);
+      });
+    }
+    dots.forEach((dot) => {
+      dot.addEventListener('click', () => goTo(parseInt(dot.dataset.index, 10)));
+    });
+    setInterval(() => goTo(activeIndex + 1), 6000);
+  }
+  function initShowcaseSlider() {
+    const slides = document.querySelectorAll('.showcase-slide');
+    const dots = document.querySelectorAll('.showcase-dot');
+    if (!slides.length) return;
+    let idx = 0;
+    function go(n) {
+      idx = (n + slides.length) % slides.length;
+      slides.forEach((s, i) => {
+        s.classList.toggle('opacity-100', i === idx);
+        s.classList.toggle('opacity-0', i !== idx);
+      });
+      dots.forEach((d, i) => {
+        d.classList.toggle('w-5', i === idx);
+        d.classList.toggle('w-2', i !== idx);
+        d.classList.toggle('bg-blue-400', i === idx);
+        d.classList.toggle('bg-white/60', i !== idx);
+      });
+    }
+    dots.forEach((d) => d.addEventListener('click', () => go(parseInt(d.dataset.index))));
+    setInterval(() => go(idx + 1), 5000);
+  }
+  function initFaq() {
+    document.querySelectorAll('.faq-item').forEach((item) => {
+      const btn = item.querySelector('.faq-btn');
+      const content = item.querySelector('.faq-content');
+      const icon = item.querySelector('.faq-icon');
+      if (!btn || !content) return;
+      btn.addEventListener('click', () => {
+        const isOpen = !content.classList.contains('hidden');
+        document.querySelectorAll('.faq-content').forEach((c) => c.classList.add('hidden'));
+        document.querySelectorAll('.faq-icon').forEach((i) => i.classList.remove('rotate-180'));
+        if (!isOpen) {
+          content.classList.remove('hidden');
+          if (icon) icon.classList.add('rotate-180');
+        }
+      });
+    });
+  }
+  function initToggles() {
+    const onColors = { default: ['bg-indigo-600'], success: ['bg-emerald-600'], warning: ['bg-amber-500'] };
+    const offColors = ['bg-slate-200', 'dark:bg-slate-700'];
+    document.querySelectorAll('.toggle-btn').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const on = btn.getAttribute('aria-pressed') === 'true';
+        const onLeft = btn.dataset.onLeft || 'left-7';
+        const variant = btn.classList.contains('toggle-success') ? 'success' : btn.classList.contains('toggle-warning') ? 'warning' : 'default';
+        const colors = onColors[variant];
+        btn.setAttribute('aria-pressed', !on);
+        colors.forEach((c) => btn.classList.toggle(c, !on));
+        offColors.forEach((c) => btn.classList.toggle(c, on));
+        const knob = btn.querySelector('span');
+        if (knob) {
+          knob.classList.toggle('left-1', on);
+          knob.classList.toggle(onLeft, !on);
+        }
+      });
+    });
+    function updatePillState(btn) {
+      const group = btn.closest('.inline-flex');
+      if (!group) return;
+      group.querySelectorAll('.pill-toggle').forEach((b) => {
+        const isActive = b.getAttribute('aria-pressed') === 'true';
+        b.classList.toggle('bg-white', isActive);
+        b.classList.toggle('text-slate-900', isActive);
+        b.classList.toggle('shadow-sm', isActive);
+        b.classList.toggle('dark:bg-slate-700', isActive);
+        b.classList.toggle('dark:text-slate-100', isActive);
+        b.classList.toggle('text-slate-600', !isActive);
+        b.classList.toggle('dark:text-slate-400', !isActive);
+      });
+    }
+    document.querySelectorAll('.pill-toggle').forEach((btn) => {
+      const group = btn.closest('.inline-flex');
+      if (group && !group.dataset.pillInit) {
+        group.dataset.pillInit = '1';
+        updatePillState(btn);
+      }
+    });
+    document.querySelectorAll('.pill-toggle').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const group = btn.closest('.inline-flex');
+        if (!group) return;
+        group.querySelectorAll('.pill-toggle').forEach((b) => { b.setAttribute('aria-pressed', b === btn); });
+        updatePillState(btn);
+      });
+    });
+  }
+  function initYear() {
+    const el = document.getElementById('year');
+    if (el) el.textContent = new Date().getFullYear();
+  }
+  initTheme();
+  initMobileMenu();
+  initHeroSlider();
+  initShowcaseSlider();
+  initFaq();
+  initToggles();
+  initYear();
+})();
+  </script>
+
+       <!--
+          PANDA ELEMENT SELECTION SCRIPT
+          ===============================
+          Captures all element clicks inside the iframe and sends metadata to Bubble via postMessage.
+          Metadata captured: url, width, height, alt
+            ⚠ Do NOT remove or modify this script unless explicitly instructed by the admin.
+        -->
+        <script src="https://bfwqdadlcyndtaqmqtci.supabase.co/storage/v1/object/public/pandajs/panda-element-selection.js" defer></script>
+
+        <!--
+          PANDA BRANDING SCRIPT
+          ====================
+          Handles Panda-specific branding, logos, placeholders, and runtime injection for the iframe/editor.
+            ⚠ Do NOT remove or modify this script unless explicitly instructed by the admin.
+        -->
+        <script src="https://bfwqdadlcyndtaqmqtci.supabase.co/storage/v1/object/public/pandajs/panda-branding.js" defer></script>
+        <!--
+          PANDA AUTO RELOAD SCRIPT
+          ====================
+          Handles Panda HMR solution built on railway to hot reload changes in preview.
+            ⚠ Do NOT remove or modify this script unless explicitly instructed by the admin.
+        -->
+        <script>
+        const es = new EventSource("/__hmr");
+        es.onmessage = () => location.reload();
+        </script>
+
+        
+</body>
+</html>
